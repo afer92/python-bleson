@@ -377,13 +377,17 @@ class AdvertisingDataConverters(object):
                 log.debug("GAP Appearance={}".format(advertisement.appearance))
 
             else:
-                log.warning(
-                    "TODO: Unhandled GAP type, pos={} type=0x{:02x} len={}".format(
-                        pos, gap_type, length
+                if data_info[0] ==  0x95:
+                    # Xiaomi UUID
+                    advertisement.service_data = data_info
+                else:
+                    log.warning(
+                        "TODO: Unhandled GAP type, pos={} type=0x{:02x} len={}".format(
+                            pos, gap_type, length
+                        )
                     )
-                )
-                log.warning(data_info)
-                log.warning(pos_info)
+                    log.warning(data_info)
+                    log.warning(pos_info)
 
             pos += length + 1
 
